@@ -1,0 +1,123 @@
+entende(s,sim).
+entende(y,sim).
+entende(sim,sim).
+entende(yes,sim).
+entende(1,sim).
+
+entende(n,não).
+entende(no,não).
+entende(não,não).
+entende(0,não).
+% -*- mode: Prolog  -*-
+% (c) J. R. Fisher.
+% http://www.csupomona.edu/~jrfisher/www/prolog_tutorial/2_17.html
+
+% Animal identification rules
+% To run, type      go.
+
+
+
+tartaruga(t1,'Tartaruga de Couro |Dermochelys coriacea').
+tartaruga(t2,'Tartaruga de Pente|Eretmochelys imbricata').
+tartaruga(t3,'Tartaruga Verde|Chelonia mydas').
+tartaruga(t4,'Tartaruga Australiana|Natator depressus').
+tartaruga(t5,'Tartaruga Oliva|Lepidochelys olivacea').
+tartaruga(t6,'Tartaruga Cabeçuda|Caretta caretta').
+tartaruga(t7,'Tartaruga de Kemp|Lepidochelys kempii').
+
+opcao(q1,'Corpo constituído por uma carapaça única, grande, alongada e flexível com sete quilhas distintas que se localizam ao longo do comprimento da tartaruga, de cor cinzenta escura ou preta com pontos brancos e barbatanas sem unhas.').
+opcao(q2,'Corpo constituído por uma carapaça óssea, dura, sem quilhas mas com placas grandes e barbatanas com uma ou duas unhas.').
+opcao(q3,'Carapaça com 4 pares placas laterais.').
+opcao(q4,'Carapaça com 5 ou mais pares de placas laterais.').
+opcao(q5,'Cabeça estreita, dois pares de escamas pré-frontais e bico como o de um falcão. Carapaça de cor castanho-amarelado com quatro placas laterais imbricando-se como telhas. Barbatanas anteriores e posteriores com duas unhas.').
+opcao(q6,'Cabeça pequena com um único par de escamas pré-orbitais. Carapaça redonda ou oval e as placas não se sobrepõem. Barbatanas com uma unha visível.').
+opcao(q7,'Mandíbula serrilhada. Carapaça de forma oval. A cor da carapaça varia de verde-claro a muito escuro e de baço a muito brilhante, ou de tons de amarelo, castanho e verde com listras radiantes. O plastrão varia entre o branco e o amarelado, nas populações do Atlântico a tons mais escuros nas populações do Pacífico.').
+opcao(q8,'Carapaça redonda e achatada com placas não sobrepostas e cobertas por uma fina camada de cera; de cor verde-acinzentada e as margens de cor amarelada.').
+opcao(q9,'Carapaça com 5 pares de placas laterais.').
+opcao(q10,'Carapaça com seis ou mais placas laterais, de cor verde-acinzentado escuro. Barbatanas com uma ou duas unhas visíveis, e podem ter uma unha extra nas barbatanas anteriores.').
+opcao(q11,'Cabeça grande e mandíbulas fortes. Carapaça oval de cor castanho e o plastrão de cor amarelada. Barbatanas dianteiras curtas e grossas com 2 unhas, e barbatanas traseiras com 2 ou 3 unhas.').
+opcao(q12,'Carapaça redonda, de cor verde-acinzentado escuro. Barbatanas anteriores com uma unha e as posteriores com 1 ou 2 unhas.').
+
+
+
+ /* hypotheses to be tested */
+hypothesize(t1) :- t1, !.
+hypothesize(t2) :- t2, !.
+hypothesize(t3) :- t3, !.
+hypothesize(t4) :- t4, !.
+hypothesize(t5) :- t5, !.
+hypothesize(t6) :- t6, !.
+hypothesize(t7) :- t7, !.
+hypothesize(unknown). /* no diagnosis */
+
+
+t1:-verify(q1).
+t2:-verify(q2),verify(q3),verify(q5).
+t3:-verify(q2),verify(q3),verify(q6),verify(q7).
+t4:-verify(q2),verify(q3),verify(q6),verify(q8).
+t5:-verify(q2),verify(q4),verify(q9),verify(q11).
+t6:-verify(q2),verify(q4),verify(q9),verify(q12).
+t7:-verify(q2),verify(q4),verify(q5).
+
+
+
+ask(Question) :-
+        write('Q: '),opcao(Question,Q),
+        write(Q), write('? '),nl,
+         read(Response),nl,
+         ( entende(Response,sim)
+         -> assert(yes(Question)) ;
+         assert(no(Question)), fail).
+:- dynamic yes/1,no/1.
+/* How to verify something */
+verify(S) :- (yes(S) -> true ; (no(S) -> fail ; ask(S))).
+/* undo all yes/no assertions */
+undo :- retract(yes(_)),fail.
+undo :- retract(no(_)),fail.
+undo.
+
+
+
+
+go :- hypothesize(Animal),
+       write('I guess that the animal is: '),tartaruga(Animal,X),
+       write(X), nl, undo.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
