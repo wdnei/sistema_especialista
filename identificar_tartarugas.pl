@@ -1,5 +1,5 @@
-% Identificar a especie de tartarugas marinhas tartaruga
-% através de algumas perguntas é possivel encontrar a escpécie de uma tartaruga
+% Sistema Especialista - Identificar especie de tartarugas marinhas 
+%  --através de algumas perguntas é possivel encontrar a espécie de uma tartaruga
 % Author: Wdnei Ribeiro da Paixao
 % Para iniciar, digite "identificar".
 
@@ -56,7 +56,7 @@ t4:-verificar(q2),verificar(q3),verificar(q6),verificar(q8).
 t5:-verificar(q2),verificar(q4),verificar(q9),verificar(q11).
 t6:-verificar(q2),verificar(q4),verificar(q9),verificar(q12).
 t7:-verificar(q2),verificar(q4),verificar(q5).
-t8:-write('Não consegui achar. Isto é mesmo uma tartaruga...!'),fail,!.
+t8:-write('Não consegui achar. Isto é mesmo uma tartaruga??!!...'),fail,!.
 
 
 perguntar(Pergunta) :-opcao(Pergunta,Q),
@@ -74,7 +74,7 @@ undo :- retract(no(_)),fail.
 undo.
 
 
-identificar :- write('--*--Olá, vou te axuliar a identificar uma tartaruga...responda as perguntas...--*--')
+identificar :- write('--*--Olá, vou te auxiliar a identificar uma tartaruga...responda as perguntas...--*--')
 		,nl,nl, busca(Animal),
        write('Eu acho que a tartaruga é: '),tartaruga(Animal,X),
        write(X), nl, undo.
